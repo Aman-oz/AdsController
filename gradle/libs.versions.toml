@@ -1,0 +1,50 @@
+[versions]
+agp = "8.3.0"
+kotlin = "1.9.0"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
+activity = "1.8.0"
+constraintlayout = "2.1.4"
+intuitVersion = "1.1.0"
+androidxLifecycleVersion = "2.7.0"
+koinVersion = "3.4.0"
+workmanagerVersion = "2.9.0"
+googleAdsVersion = "22.6.0"
+shimmerVersion = "0.5.0"
+firebaseBomVersion = "32.7.2"
+lifecycleProcess = "2.7.0"
+
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+layout-size-sdp = { group = "com.intuit.sdp", name = "sdp-android", version.ref = "intuitVersion" }
+text-size-ssp = { group = "com.intuit.ssp", name = "ssp-android", version.ref = "intuitVersion" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycleVersion" }
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycleVersion" }
+koin-di = { group = "io.insert-koin", name = "koin-android", version.ref = "koinVersion" }
+workmanager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workmanagerVersion" }
+google-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "googleAdsVersion" }
+shimmer-view = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmerVersion" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-remote-config = { group = "com.google.firebase", name = "firebase-config" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+mavenPublish = { id = "maven-publush"}
+
