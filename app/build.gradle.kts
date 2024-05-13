@@ -90,6 +90,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.androidx.lifecycle.process)
     implementation(project(path = ":ads-manager"))
+    //implementation (libs.admob.ads.controller)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

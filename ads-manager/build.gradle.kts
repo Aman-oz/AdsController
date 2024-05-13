@@ -35,12 +35,12 @@ android {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("maven") {
-                groupId = "com.github.aman"
+            create<MavenPublication>("release") {
+                groupId = "com.github.Aman-oz"
                 artifactId = "ads-manager"
                 version = "1.0.0"
 
-                from(components.getByName("release"))
+                from(components["release"])
             }
         }
     }

@@ -17,6 +17,7 @@ googleAdsVersion = "22.6.0"
 shimmerVersion = "0.5.0"
 firebaseBomVersion = "32.7.2"
 lifecycleProcess = "2.7.0"
+adsControllerVersion = "1.0.0"
 
 
 [libraries]
@@ -41,6 +42,7 @@ firebase-remote-config = { group = "com.google.firebase", name = "firebase-confi
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycleProcess" }
+admob-ads-controller = { group = "com.github.Aman-oz", name = "AdsController", version.ref = "adsControllerVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
