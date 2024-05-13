@@ -32,7 +32,7 @@ android {
         jvmTarget = "1.8"
     }
 }
-afterEvaluate {
+/*afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
@@ -42,6 +42,18 @@ afterEvaluate {
 
                 from(components["release"])
             }
+        }
+    }
+}*/
+
+afterEvaluate {
+    android.libraryVariants.forEach { variant ->
+        publishing.publications.create(variant.name, MavenPublication::class) {
+            groupId = "com.github.Aman-oz"
+            artifactId = "ads-manager"
+            version = "1.0.0"
+
+            from(components["release"])
         }
     }
 }
