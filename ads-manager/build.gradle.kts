@@ -39,7 +39,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
                 artifactId = "AdsController"
-                version = "1.0.8"
+                version = "1.0.9"
 
                 from(components["release"])
             }
