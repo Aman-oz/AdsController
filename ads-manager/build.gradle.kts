@@ -32,31 +32,72 @@ android {
         jvmTarget = "1.8"
     }
 }
-afterEvaluate {
+
+/*afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
                 artifactId = "ads-manager"
-                version = "1.0.0"
+                version = "1.0.3"
 
                 from(components["release"])
             }
         }
     }
-}
+}*/
 
-/*afterEvaluate {
-    android.libraryVariants.forEach { variant ->
-        publishing.publications.create(variant.name, MavenPublication::class) {
-            groupId = "com.github.Aman-oz"
-            artifactId = "ads-manager"
-            version = "1.0.0"
 
-            from(components["release"])
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                groupId = "com.github.Aman-oz"
+                artifactId = "ads-manager"
+                version = "1.0.3"
+
+                /*pom {
+                    name = "Preference"
+                    description = "Android preference extensions"
+                    url = "https://github.com/Slion/Preference"
+                    *//*properties = mapOf(
+                        "myProp" to "value",
+                        "prop.with.dots" to "anotherValue"
+                    )*//*
+                    licenses {
+                        license {
+                            name = "GNU Lesser General Public License v3.0"
+                            url = "https://github.com/Slion/Preference/blob/main/LICENSE"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "Slion"
+                            name = "Stéphane Lenclud"
+                            email = "github@lenclud.com"
+                        }
+                    }
+                    scm {
+                        //connection = "scm:git:git://example.com/my-library.git"
+                        //developerConnection = "scm:git:ssh://example.com/my-library.git"
+                        url = "https://github.com/Slion/Preference"
+                    }
+                }*/
+
+                afterEvaluate {
+                    from(components["release"])
+                }
+            }
+        }
+
+        // That gives us a task named publishAllPublicationsToMavenRepository
+        repositories {
+            maven {
+                name = "maven"
+                url = uri(layout.buildDirectory.dir("maven"))
+            }
         }
     }
-}*/
+
 
 
 dependencies {
