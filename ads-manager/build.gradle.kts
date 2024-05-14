@@ -51,11 +51,14 @@ android {
     publishing {
         publications {
             register<MavenPublication>("release") {
-               /* groupId = "com.github.Aman-oz"
+                groupId = "com.github.Aman-oz"
                 artifactId = "AdsController"
-                version = "1.0.5"*/
+                version = "1.0.6"
+                afterEvaluate {
+                    from(components["release"])
+                }
 
-                pom {
+                /*pom {
                     packaging = "aar"
                     name.set("foobar")
                     description.set("This library does things and stuff!")
@@ -77,7 +80,7 @@ android {
                         connection.set("scm:git:${url.get()}.git")
                         developerConnection.set("scm:git:${url.get()}.git")
                     }
-                }
+                }*/
 
                 /*pom {
                     name = "Preference"
@@ -107,9 +110,7 @@ android {
                     }
                 }*/
 
-                afterEvaluate {
-                    from(components["release"])
-                }
+
             }
         }
 
