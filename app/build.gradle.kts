@@ -12,7 +12,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 3
-        versionName = "1.0.2"
+        versionName = "1.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -89,8 +89,8 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.androidx.lifecycle.process)
-    implementation(project(path = ":ads-manager"))
-    //implementation (libs.admob.ads.controller)
+    //implementation(project(path = ":ads-manager"))
+    implementation (libs.admob.ads.controller)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
