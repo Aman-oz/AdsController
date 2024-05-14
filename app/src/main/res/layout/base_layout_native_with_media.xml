@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.SecondActivity">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/adRootLayoutNativeLarge"
+        android:id="@+id/adRootLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/adShimmerNativeLarge"
+            android:id="@+id/shimmer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:shimmer_duration="800">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_160sdp"
-                android:background="@color/shimmer_color" />
+            <include layout="@layout/ad_shimmer_with_media" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-
         <FrameLayout
-            android:id="@+id/adFrameNativeLarge"
+            android:id="@+id/adFrame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,15 +38,5 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <include
-        android:id="@+id/customAdLayoutInclude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/base_layout_native_with_media"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/adRootLayoutNativeLarge"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

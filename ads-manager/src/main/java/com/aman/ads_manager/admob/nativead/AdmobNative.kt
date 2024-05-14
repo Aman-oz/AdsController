@@ -49,6 +49,7 @@ class AdmobNative {
      */
     fun loadNativeAds(
         activity: Activity?,
+        adLayout: Int,
         adFrame: FrameLayout,
         adShimmer: ShimmerFrameLayout,
         nativeId: String,
@@ -74,7 +75,7 @@ class AdmobNative {
                         preloadNativeAd = null
                         Log.d("AdsInformation", "admob native onAdLoaded")
                         bannerCallBack.onPreloaded()
-                        displayNativeAd(mActivity, adFrame, nativeType)
+                        displayNativeAd(mActivity,adLayout, adFrame, nativeType)
                         return
                     }
                     if (adMobNativeAd == null) {
@@ -85,6 +86,7 @@ class AdmobNative {
                                     adMobNativeAd = unifiedNativeAd
                                 }
                                     .withAdListener(object : AdListener() {
+
                                         override fun onAdImpression() {
                                             super.onAdImpression()
                                             Log.d("AdsInformation", "admob native onAdImpression")
@@ -107,7 +109,7 @@ class AdmobNative {
                                             adShimmer.gone()
                                             Log.d("AdsInformation", "admob native onAdLoaded")
                                             bannerCallBack.onAdLoaded()
-                                            displayNativeAd(mActivity, adFrame, nativeType)
+                                            displayNativeAd(mActivity, adLayout, adFrame, nativeType)
 
                                         }
 
@@ -126,7 +128,7 @@ class AdmobNative {
                     } else {
                         Log.e("AdsInformation", "Native is already loaded")
                         bannerCallBack.onPreloaded()
-                        displayNativeAd(mActivity, adFrame, nativeType)
+                        displayNativeAd(mActivity, adLayout,adFrame, nativeType)
                     }
 
                 } else {
@@ -145,6 +147,7 @@ class AdmobNative {
 
     private fun displayNativeAd(
         activity: Activity?,
+        adLayout: Int,
         adMobNativeContainer: FrameLayout,
         nativeType: NativeType,
     ) {
@@ -153,7 +156,8 @@ class AdmobNative {
                 adMobNativeAd?.let { ad ->
                     val inflater = LayoutInflater.from(mActivity)
 
-                    val adView: NativeAdView = when (nativeType) {
+                    val adView: NativeAdView = inflater.inflate(adLayout, null) as NativeAdView
+                        /*when (nativeType) {
                         NativeType.BANNER -> inflater.inflate(R.layout.native_banner, null) as NativeAdView
                         NativeType.SMALL -> inflater.inflate(R.layout.native_small, null) as NativeAdView
                         NativeType.LARGE -> inflater.inflate(R.layout.native_large, null) as NativeAdView
@@ -162,7 +166,7 @@ class AdmobNative {
                         } else {
                             inflater.inflate(R.layout.native_small, null) as NativeAdView
                         }
-                    }
+                    }*/
 
                     /******ad revenue logic*******/
                     ad.setOnPaidEventListener { adValue ->
