@@ -33,22 +33,22 @@ android {
     }
 }
 
-/*afterEvaluate {
+afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
-                artifactId = "ads-manager"
-                version = "1.0.3"
+                artifactId = "AdsController"
+                version = "1.0.8"
 
                 from(components["release"])
             }
         }
     }
-}*/
+}
 
 
-    publishing {
+    /*publishing {
         publications {
             register<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
@@ -58,7 +58,7 @@ android {
                     from(components["release"])
                 }
 
-                /*pom {
+                *//*pom {
                     packaging = "aar"
                     name.set("foobar")
                     description.set("This library does things and stuff!")
@@ -80,16 +80,16 @@ android {
                         connection.set("scm:git:${url.get()}.git")
                         developerConnection.set("scm:git:${url.get()}.git")
                     }
-                }*/
+                }*//*
 
-                /*pom {
+                *//*pom {
                     name = "Preference"
                     description = "Android preference extensions"
                     url = "https://github.com/Slion/Preference"
-                    *//*properties = mapOf(
+                    *//**//*properties = mapOf(
                         "myProp" to "value",
                         "prop.with.dots" to "anotherValue"
-                    )*//*
+                    )*//**//*
                     licenses {
                         license {
                             name = "GNU Lesser General Public License v3.0"
@@ -108,7 +108,7 @@ android {
                         //developerConnection = "scm:git:ssh://example.com/my-library.git"
                         url = "https://github.com/Slion/Preference"
                     }
-                }*/
+                }*//*
 
 
             }
@@ -122,7 +122,7 @@ android {
             }
         }
     }
-
+*/
 
 
 dependencies {
