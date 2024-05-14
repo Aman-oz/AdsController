@@ -123,13 +123,14 @@ class AdmobNativePreload {
      */
     fun showNativeAds(
         activity: Activity?,
+        adLayout: Int,
         adsPlaceHolder: FrameLayout,
         nativeType: NativeType,
     ) {
         activity?.let { mActivity ->
             preloadNativeAd?.let {
                 adsPlaceHolder.visibility = View.VISIBLE
-                displayNativeAd(mActivity, adsPlaceHolder, nativeType)
+                displayNativeAd(mActivity,adLayout, adsPlaceHolder, nativeType)
             } ?: kotlin.run {
                 adsPlaceHolder.visibility = View.GONE
             }
@@ -138,6 +139,7 @@ class AdmobNativePreload {
 
     private fun displayNativeAd(
         activity: Activity?,
+        adLayout: Int,
         adMobNativeContainer: FrameLayout,
         nativeType: NativeType,
     ) {
@@ -146,7 +148,8 @@ class AdmobNativePreload {
                 preloadNativeAd?.let { ad ->
                     val inflater = LayoutInflater.from(mActivity)
 
-                    val adView: NativeAdView = when (nativeType) {
+                    val adView: NativeAdView = inflater.inflate(adLayout, null) as NativeAdView
+                       /* when (nativeType) {
                         NativeType.BANNER -> inflater.inflate(R.layout.native_banner, null) as NativeAdView
                         NativeType.SMALL -> inflater.inflate(R.layout.native_small, null) as NativeAdView
                         NativeType.LARGE -> inflater.inflate(R.layout.native_large, null) as NativeAdView
@@ -155,7 +158,7 @@ class AdmobNativePreload {
                         } else {
                             inflater.inflate(R.layout.native_small, null) as NativeAdView
                         }
-                    }
+                    }*/
 
                     val viewGroup: ViewGroup? = adView.parent as ViewGroup?
                     viewGroup?.removeView(adView)

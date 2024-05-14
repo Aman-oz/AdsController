@@ -53,7 +53,6 @@ class AdmobNative {
         adFrame: FrameLayout,
         adShimmer: ShimmerFrameLayout,
         nativeId: String,
-        adEnable: Int,
         isAppPurchased: Boolean,
         isInternetConnected: Boolean,
         nativeType: NativeType,
@@ -65,7 +64,7 @@ class AdmobNative {
         }
         activity?.let { mActivity ->
             try {
-                if (isInternetConnected && adEnable != 0 && !isAppPurchased && nativeId.isNotEmpty()) {
+                if (isInternetConnected && !isAppPurchased && nativeId.isNotEmpty()) {
                     adFrame.visible()
 
                     // reuse of preloaded native ad
@@ -134,8 +133,8 @@ class AdmobNative {
                 } else {
                     adFrame.gone()
                     adShimmer.gone()
-                    Log.e("AdsInformation", "adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
-                    bannerCallBack.onAdFailedToLoad("adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    Log.e("AdsInformation", "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    bannerCallBack.onAdFailedToLoad("isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 }
 
             } catch (ex: Exception) {

@@ -85,6 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnShowRewardedInterAd.setOnRapidClickSafeListener {
             showRewardedInterstitialAd()
+            openNextActivity()
         }
 
         bannerAd.loadBannerAds(
@@ -129,7 +130,7 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        nativeAd.loadNativeAds(
+        /*nativeAd.loadNativeAds(
             this,
             binding.adFrameNativeBanner,
             binding.adShimmerNativeBanner,
@@ -210,9 +211,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         )
-
+*/
         nativeAd.loadNativeAds(
             this,
+            R.layout.native_ad_layout_with_media,
             binding.adFrameNativeLarge,
             binding.adShimmerNativeLarge,
             "ca-app-pub-3940256099942544/2247696110",
