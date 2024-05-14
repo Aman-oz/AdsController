@@ -55,6 +55,30 @@ android {
                 artifactId = "ads-manager"
                 version = "1.0.3"
 
+                pom {
+                    packaging = "aar"
+                    name.set("foobar")
+                    description.set("This library does things and stuff!")
+                    url.set("https://github.com/example/foobar")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/license/mit/")
+                        }
+                    }
+                    developers {
+                        developer {
+                            name.set("Aman")
+                            email.set("aman.ozi@example.com")
+                        }
+                    }
+                    scm {
+                        url.set(pom.url.get())
+                        connection.set("scm:git:${url.get()}.git")
+                        developerConnection.set("scm:git:${url.get()}.git")
+                    }
+                }
+
                 /*pom {
                     name = "Preference"
                     description = "Android preference extensions"
