@@ -17,7 +17,7 @@ googleAdsVersion = "22.6.0"
 shimmerVersion = "0.5.0"
 firebaseBomVersion = "32.7.2"
 lifecycleProcess = "2.7.0"
-adsControllerVersion = "1.0.2"
+adsControllerVersion = "1.0"
 
 
 [libraries]
