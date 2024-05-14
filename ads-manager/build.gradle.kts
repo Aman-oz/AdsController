@@ -52,8 +52,8 @@ android {
         publications {
             register<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
-                artifactId = "ads-manager"
-                version = "1.0.4"
+                artifactId = "AdsController"
+                version = "1.0.5"
 
                 pom {
                     packaging = "aar"
