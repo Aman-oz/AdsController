@@ -85,6 +85,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnShowRewardedInterAd.setOnRapidClickSafeListener {
             showRewardedInterstitialAd()
+
+            preLoadNativeForNextScreen()
             openNextActivity()
         }
 
@@ -130,14 +132,14 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        /*nativeAd.loadNativeAds(
+        nativeAd.loadNativeAds(
             this,
-            binding.adFrameNativeBanner,
-            binding.adShimmerNativeBanner,
+            R.layout.native_ad_banner_layout,
+            binding.customNativeBannerAdLayout.adFrame,
+            binding.customNativeBannerAdLayout.shimmer,
             "ca-app-pub-3940256099942544/2247696110",
-            1,
             false,
-            true,
+            connectivityManager.isInternetConnected,
             NativeType.BANNER,
             bannerCallBack = object : BannerCallBack {
                 override fun onAdFailedToLoad(adError: String) {
@@ -173,12 +175,12 @@ class MainActivity : AppCompatActivity() {
 
         nativeAd.loadNativeAds(
             this,
-            binding.adFrameNativeSmall,
-            binding.adShimmerNativeSmall,
+            R.layout.native_ad_small_without_media,
+            binding.customNativeSmallAdLayout.adFrame,
+            binding.customNativeSmallAdLayout.shimmer,
             "ca-app-pub-3940256099942544/2247696110",
-            1,
             false,
-            true,
+            connectivityManager.isInternetConnected,
             NativeType.SMALL,
             bannerCallBack = object : BannerCallBack {
                 override fun onAdFailedToLoad(adError: String) {
@@ -211,57 +213,16 @@ class MainActivity : AppCompatActivity() {
 
             }
         )
-*/
+
         nativeAd.loadNativeAds(
             this,
             R.layout.native_ad_layout_with_media,
-            binding.adFrameNativeLarge,
-            binding.adShimmerNativeLarge,
+            binding.customNativeLargeAdLayout.adFrame,
+            binding.customNativeLargeAdLayout.shimmer,
             "ca-app-pub-3940256099942544/2247696110",
-            1,
             false,
-            true,
+            connectivityManager.isInternetConnected,
             NativeType.LARGE,
-            bannerCallBack = object : BannerCallBack {
-                override fun onAdFailedToLoad(adError: String) {
-                    Log.d(TAG, "onAdFailedToLoad: ")
-                }
-
-                override fun onAdLoaded() {
-                    Log.d(TAG, "onAdLoaded: ")
-                }
-
-                override fun onAdImpression() {
-                    Log.d(TAG, "onAdImpression: ")
-                }
-
-                override fun onPreloaded() {
-                    Log.d(TAG, "onPreloaded: ")
-                }
-
-                override fun onAdClicked() {
-                    Log.d(TAG, "onAdClicked: ")
-                }
-
-                override fun onAdClosed() {
-                    Log.d(TAG, "onAdClosed: ")
-                }
-
-                override fun onAdOpened() {
-                    Log.d(TAG, "onAdOpened: ")
-                }
-
-            }
-        )
-
-
-        //Preload function
-        nativeAdPreLoad.loadNativeAds(
-            this,
-            "ca-app-pub-3940256099942544/2247696110",
-            1,
-            false,
-            true,
             bannerCallBack = object : BannerCallBack {
                 override fun onAdFailedToLoad(adError: String) {
                     Log.d(TAG, "onAdFailedToLoad: ")
@@ -297,36 +258,47 @@ class MainActivity : AppCompatActivity() {
         loadInterstitialAd()
         loadRewardedAd()
         loadRewardedInterstitialAd()
+    }
 
-      /*  AdmobAppOpen.getInstance().initialize(AppClass.getInstance())
-        AdmobAppOpen.getInstance().fetchAd(
-            isAppPurchased = false,
-            "/6499/example/app-open",
-            connectivityManager.isInternetConnected
-        )*/
+    //Preload function
+    private fun preLoadNativeForNextScreen() {
+        nativeAdPreLoad.loadNativeAds(
+            this,
+            "ca-app-pub-3940256099942544/2247696110",
+            1,
+            false,
+            connectivityManager.isInternetConnected,
+            bannerCallBack = object : BannerCallBack {
+                override fun onAdFailedToLoad(adError: String) {
+                    Log.d(TAG, "onAdFailedToLoad: ")
+                }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-             /*AdmobAppOpen.getInstance().showAdIfAvailable(
-                 this,
-                 isAppPurchased = false,
-                 connectivityManager.isInternetConnected,
-                 object : AppOpenCallBack {
-                     override fun success() {
-                         Log.d(TAG, "success: ")
-                     }
+                override fun onAdLoaded() {
+                    Log.d(TAG, "onAdLoaded: ")
+                }
 
-                     override fun failure() {
-                         Log.d(TAG, "failure: ")
-                     }
+                override fun onAdImpression() {
+                    Log.d(TAG, "onAdImpression: ")
+                }
 
-                     override fun onOpenAdClosed() {
-                         Log.d(TAG, "onOpenAdClosed: ")
-                     }
+                override fun onPreloaded() {
+                    Log.d(TAG, "onPreloaded: ")
+                }
 
-                 }
-             )*/
-        },10000)
+                override fun onAdClicked() {
+                    Log.d(TAG, "onAdClicked: ")
+                }
 
+                override fun onAdClosed() {
+                    Log.d(TAG, "onAdClosed: ")
+                }
+
+                override fun onAdOpened() {
+                    Log.d(TAG, "onAdOpened: ")
+                }
+
+            }
+        )
     }
 
     private fun loadInterstitialAd() {
@@ -334,7 +306,7 @@ class MainActivity : AppCompatActivity() {
             "ca-app-pub-3940256099942544/1033173712",
             1,
             false,
-            true,
+            connectivityManager.isInternetConnected,
             object : InterstitialOnLoadCallBack {
                 override fun onAdFailedToLoad(adError: String) {
                     Log.d(TAG, "onAdFailedToLoad: ")
@@ -415,7 +387,7 @@ class MainActivity : AppCompatActivity() {
                 "ca-app-pub-3940256099942544/5224354917",
                 1,
                 false,
-                true,
+                connectivityManager.isInternetConnected,
                 object : RewardedOnLoadCallBack {
                     override fun onAdFailedToLoad(adError: String) {
                         Log.d(TAG, "onAdFailedToLoad: ")
@@ -443,7 +415,7 @@ class MainActivity : AppCompatActivity() {
                 "ca-app-pub-3940256099942544/5224354917",
                 1,
                 false,
-                true,
+                connectivityManager.isInternetConnected,
                 object : RewardedOnLoadCallBack {
                     override fun onAdFailedToLoad(adError: String) {
                         Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: $adError")

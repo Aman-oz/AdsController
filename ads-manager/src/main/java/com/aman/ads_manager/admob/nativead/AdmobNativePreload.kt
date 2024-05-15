@@ -46,7 +46,6 @@ class AdmobNativePreload {
     fun loadNativeAds(
         activity: Activity?,
         nativeId: String,
-        adEnable: Int,
         isAppPurchased: Boolean,
         isInternetConnected: Boolean,
         bannerCallBack: BannerCallBack
@@ -57,7 +56,7 @@ class AdmobNativePreload {
         }
         activity?.let { mActivity ->
             try {
-                if (isInternetConnected && adEnable != 0 && !isAppPurchased && !isNativeLoading && nativeId.isNotEmpty()) {
+                if (isInternetConnected && !isAppPurchased && !isNativeLoading && nativeId.isNotEmpty()) {
                     isNativeLoading = true
                     if (preloadNativeAd == null) {
                         CoroutineScope(Dispatchers.IO + handlerException).launch {
@@ -105,8 +104,8 @@ class AdmobNativePreload {
                     }
 
                 } else {
-                    Log.e("AdsInformation", "adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
-                    bannerCallBack.onAdFailedToLoad("adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    Log.e("AdsInformation", "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    bannerCallBack.onAdFailedToLoad("isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 }
 
             } catch (ex: Exception) {
