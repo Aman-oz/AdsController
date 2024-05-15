@@ -2,8 +2,6 @@ package com.aman.adscontroller
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +32,7 @@ import com.aman.adscontroller.ui.SecondActivity
  * Software Engineer Android
  */
 
-const val NATIVE_AD_ID = "/6499/example/native"
+const val REWARDED_VIDEO = "/6499/example/rewarded-video"
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.java.simpleName
 
@@ -42,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    //private lateinit var bannerAd: AdmobBanner
     private lateinit var nativeAd: AdmobNative
     private lateinit var nativeAdPreLoad: AdmobNativePreload
     private lateinit var interAd: AdmobInterstitial
@@ -59,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-       // bannerAd = AdmobBanner()
         nativeAd = AdmobNative()
         nativeAdPreLoad = AdmobNativePreload()
         rewardedAd = AdmobRewarded()
@@ -411,36 +407,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadRewardedInterstitialAd() {
-        /*if (!rewardedInterAd.isRewardedLoaded()) {
-            rewardedInterAd.loadRewardedAd(
-                "ca-app-pub-3940256099942544/5224354917",
-                1,
-                false,
-                connectivityManager.isInternetConnected,
-                object : RewardedOnLoadCallBack {
-                    override fun onAdFailedToLoad(adError: String) {
-                        Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: $adError")
-                    }
-
-                    override fun onAdLoaded() {
-                        Log.d(TAG, "loadRewardedInterstitialAd onAdLoaded: ")
-                    }
-
-                    override fun onPreloaded() {
-                        Log.d(TAG, "loadRewardedInterstitialAd onPreloaded: ")
-                    }
-
-                }
-            )
-        }*/
 
         rewardedInterAd.loadRewardedInterstitialAd(
-            NATIVE_AD_ID,
+            REWARDED_VIDEO,
             false,
             connectivityManager.isInternetConnected,
             object : RewardedOnLoadCallBack {
                 override fun onAdFailedToLoad(adError: String) {
-                    Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: ")
+                    Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: $adError")
                 }
 
                 override fun onAdLoaded() {
@@ -456,34 +430,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showRewardedInterstitialAd() {
-        /*if (rewardedInterAd.isRewardedLoaded()) {
-            rewardedInterAd.showRewardedAd(this, object : RewardedOnShowCallBack {
-                override fun onAdClicked() {
-                    Log.d(TAG, "onAdClicked: ")
-                }
-
-                override fun onAdDismissedFullScreenContent() {
-                    Log.d(TAG, "onAdDismissedFullScreenContent: ")
-                }
-
-                override fun onAdFailedToShowFullScreenContent() {
-                    Log.d(TAG, "onAdFailedToShowFullScreenContent: ")
-                }
-
-                override fun onAdImpression() {
-                    Log.d(TAG, "onAdImpression: ")
-                }
-
-                override fun onAdShowedFullScreenContent() {
-                    Log.d(TAG, "onAdShowedFullScreenContent: ")
-                }
-
-                override fun onUserEarnedReward() {
-                    Log.d(TAG, "onUserEarnedReward: ")
-                }
-
-            })
-        }*/
         
         rewardedInterAd.showRewardedInterstitialAd(
             this,

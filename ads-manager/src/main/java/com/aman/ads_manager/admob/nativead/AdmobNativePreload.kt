@@ -35,6 +35,8 @@ import kotlinx.coroutines.launch
  */
 class AdmobNativePreload {
 
+    private val TAG = AdmobNativePreload::class.java.simpleName
+
     /**
      * 0 = Ads Off
      * 1 = Ads On
@@ -51,7 +53,7 @@ class AdmobNativePreload {
         bannerCallBack: BannerCallBack
     ) {
         val handlerException = CoroutineExceptionHandler { coroutineContext, throwable ->
-            Log.e("AdsInformation", "${throwable.message}")
+            Log.e(TAG, "${throwable.message}")
             bannerCallBack.onAdFailedToLoad("${throwable.message}")
         }
         activity?.let { mActivity ->
@@ -68,13 +70,13 @@ class AdmobNativePreload {
                                     .withAdListener(object : AdListener() {
                                         override fun onAdImpression() {
                                             super.onAdImpression()
-                                            Log.d("AdsInformation", "admob native onAdImpression")
+                                            Log.d(TAG, "admob native onAdImpression")
                                             bannerCallBack.onAdImpression()
                                             preloadNativeAd = null
                                         }
 
                                         override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                                            Log.e("AdsInformation", "admob native onAdFailedToLoad: ${loadAdError.message}")
+                                            Log.e(TAG, "admob native onAdFailedToLoad: ${loadAdError.message}")
                                             bannerCallBack.onAdFailedToLoad(loadAdError.message)
                                             preloadNativeAd = null
                                             isNativeLoading = false
@@ -83,7 +85,7 @@ class AdmobNativePreload {
 
                                         override fun onAdLoaded() {
                                             super.onAdLoaded()
-                                            Log.d("AdsInformation", "admob native onAdLoaded")
+                                            Log.d(TAG, "admob native onAdLoaded")
                                             isNativeLoading = false
                                             bannerCallBack.onAdLoaded()
                                         }
@@ -99,18 +101,18 @@ class AdmobNativePreload {
                         }
                     } else {
                         isNativeLoading = false
-                        Log.e("AdsInformation", "Native is already loaded")
+                        Log.e(TAG, "Native is already loaded")
                         bannerCallBack.onPreloaded()
                     }
 
                 } else {
-                    Log.e("AdsInformation", "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    Log.e(TAG, "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                     bannerCallBack.onAdFailedToLoad("isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 }
 
             } catch (ex: Exception) {
                 isNativeLoading = false
-                Log.e("AdsInformation", "${ex.message}")
+                Log.e(TAG, "${ex.message}")
                 bannerCallBack.onAdFailedToLoad("${ex.message}")
 
             }
@@ -231,7 +233,7 @@ class AdmobNativePreload {
                     adView.setNativeAd(ad)
                 }
             } catch (ex: Exception) {
-                Log.e("AdsInformation", "displayNativeAd: ${ex.message}")
+                Log.e(TAG, "displayNativeAd: ${ex.message}")
             }
         }
     }

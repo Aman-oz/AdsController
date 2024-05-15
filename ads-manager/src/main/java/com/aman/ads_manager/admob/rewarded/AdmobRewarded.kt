@@ -22,6 +22,8 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
  */
 class AdmobRewarded {
 
+    private val TAG = AdmobRewarded::class.java.simpleName
+
     private var context: Context? = null
 
     fun initialize(context: Context) {
@@ -49,26 +51,26 @@ class AdmobRewarded {
                         AdRequest.Builder().build(),
                         object : RewardedAdLoadCallback() {
                             override fun onAdFailedToLoad(adError: LoadAdError) {
-                                Log.e("AdsInformation", "Rewarded onAdFailedToLoad: ${adError.message}")
+                                Log.e(TAG, "Rewarded onAdFailedToLoad: ${adError.message}")
                                 isRewardedLoading = false
                                 rewardedAd = null
                                 listener.onAdFailedToLoad(adError.toString())
                             }
 
                             override fun onAdLoaded(ad: RewardedAd) {
-                                Log.d("AdsInformation", "Rewarded onAdLoaded")
+                                Log.d(TAG, "Rewarded onAdLoaded")
                                 isRewardedLoading = false
                                 rewardedAd = ad
                                 listener.onAdLoaded()
                             }
                         })
                 } else {
-                    Log.d("AdsInformation", "admob Rewarded onPreloaded")
+                    Log.d(TAG, "admob Rewarded onPreloaded")
                     listener.onPreloaded()
                 }
 
             } else {
-                Log.e("AdsInformation", "adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                Log.e(TAG, "adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 listener.onAdFailedToLoad("adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
             }
         }
@@ -79,37 +81,37 @@ class AdmobRewarded {
             if (rewardedAd != null) {
                 rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                     override fun onAdClicked() {
-                        Log.d("AdsInformation", "admob Rewarded onAdClicked")
+                        Log.d(TAG, "admob Rewarded onAdClicked")
                         listener.onAdClicked()
                     }
 
                     override fun onAdDismissedFullScreenContent() {
-                        Log.d("AdsInformation", "admob Rewarded onAdDismissedFullScreenContent")
+                        Log.d(TAG, "admob Rewarded onAdDismissedFullScreenContent")
                         listener.onAdDismissedFullScreenContent()
                         rewardedAd = null
                     }
 
                     override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                        Log.e("AdsInformation", "admob Rewarded onAdFailedToShowFullScreenContent: ${adError.message}")
+                        Log.e(TAG, "admob Rewarded onAdFailedToShowFullScreenContent: ${adError.message}")
 
                         listener.onAdFailedToShowFullScreenContent()
                         rewardedAd = null
                     }
 
                     override fun onAdShowedFullScreenContent() {
-                        Log.d("AdsInformation", "admob Rewarded onAdShowedFullScreenContent")
+                        Log.d(TAG, "admob Rewarded onAdShowedFullScreenContent")
                         listener.onAdShowedFullScreenContent()
                         rewardedAd = null
                     }
 
                     override fun onAdImpression() {
-                        Log.d("AdsInformation", "admob Rewarded onAdImpression")
+                        Log.d(TAG, "admob Rewarded onAdImpression")
                         listener.onAdImpression()
                     }
                 }
                 rewardedAd?.let { ad ->
                     ad.show(mActivity) { rewardItem ->
-                        Log.d("AdsInformation", "admob Rewarded onUserEarnedReward")
+                        Log.d(TAG, "admob Rewarded onUserEarnedReward")
                         listener.onUserEarnedReward()
                     }
 
