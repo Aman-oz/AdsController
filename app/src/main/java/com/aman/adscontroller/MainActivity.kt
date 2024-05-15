@@ -265,7 +265,6 @@ class MainActivity : AppCompatActivity() {
         nativeAdPreLoad.loadNativeAds(
             this,
             "ca-app-pub-3940256099942544/2247696110",
-            1,
             false,
             connectivityManager.isInternetConnected,
             bannerCallBack = object : BannerCallBack {
