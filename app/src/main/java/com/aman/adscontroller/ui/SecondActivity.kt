@@ -37,7 +37,7 @@ class SecondActivity : AppCompatActivity() {
             insets
         }
         admobNative.showNativeAds(this,
-            R.layout.native_ad_layout_with_media,
+            /*R.layout.native_ad_layout_with_media,*/
             binding.adFrameNativeLarge,
             NativeType.LARGE
         )
