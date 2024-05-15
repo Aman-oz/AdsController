@@ -104,14 +104,14 @@ class AdmobBanner {
 
                     adaptiveAdView?.adListener = object : AdListener() {
                         override fun onAdLoaded() {
-                            Log.d("AdsInformation", "admob banner onAdLoaded")
+                            Log.d(TAG, "admob banner onAdLoaded")
                             adShimmer.gone()
                             displayBannerAd(adFrame, adShimmer, adRoot)
                             bannerCallBack.onAdLoaded()
                         }
 
                         override fun onAdFailedToLoad(adError: LoadAdError) {
-                            Log.e("AdsInformation", "admob banner onAdFailedToLoad: ${adError.message}")
+                            Log.e(TAG, "admob banner onAdFailedToLoad: ${adError.message}")
                             adFrame.gone()
                             adRoot.gone()
                             adShimmer.gone()
@@ -119,25 +119,25 @@ class AdmobBanner {
                         }
 
                         override fun onAdImpression() {
-                            Log.d("AdsInformation", "admob banner onAdImpression")
+                            Log.d(TAG, "admob banner onAdImpression")
                             bannerCallBack.onAdImpression()
                             super.onAdImpression()
                         }
 
                         override fun onAdClicked() {
-                            Log.d("AdsInformation", "admob banner onAdClicked")
+                            Log.d(TAG, "admob banner onAdClicked")
                             bannerCallBack.onAdClicked()
                             super.onAdClicked()
                         }
 
                         override fun onAdClosed() {
-                            Log.d("AdsInformation", "admob banner onAdClosed")
+                            Log.d(TAG, "admob banner onAdClosed")
                             bannerCallBack.onAdClosed()
                             super.onAdClosed()
                         }
 
                         override fun onAdOpened() {
-                            Log.d("AdsInformation", "admob banner onAdOpened")
+                            Log.d(TAG, "admob banner onAdOpened")
                             bannerCallBack.onAdOpened()
                             super.onAdOpened()
                         }
@@ -151,11 +151,11 @@ class AdmobBanner {
                     adFrame.gone()
                     adRoot.gone()
                     adShimmer.gone()
-                    Log.e("AdsInformation", "adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    Log.e(TAG, "adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                     bannerCallBack.onAdFailedToLoad("adEnable = $adEnable, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 }
             } catch (ex: Exception) {
-                Log.e("AdsInformation", "${ex.message}")
+                Log.e(TAG, "${ex.message}")
                 bannerCallBack.onAdFailedToLoad("${ex.message}")
             }
         }
@@ -177,7 +177,7 @@ class AdmobBanner {
                 adShimmer.gone()
             }
         } catch (ex: Exception) {
-            Log.e("AdsInformation", "inflateBannerAd: ${ex.message}")
+            Log.e(TAG, "inflateBannerAd: ${ex.message}")
         }
 
     }
@@ -186,7 +186,7 @@ class AdmobBanner {
         try {
             adaptiveAdView?.pause()
         } catch (ex: Exception) {
-            Log.e("AdsInformation", "bannerOnPause: ${ex.message}")
+            Log.e(TAG, "bannerOnPause: ${ex.message}")
         }
 
     }
@@ -195,7 +195,7 @@ class AdmobBanner {
         try {
             adaptiveAdView?.resume()
         } catch (ex: Exception) {
-            Log.e("AdsInformation", "bannerOnPause: ${ex.message}")
+            Log.e(TAG, "bannerOnPause: ${ex.message}")
         }
     }
 
@@ -204,7 +204,7 @@ class AdmobBanner {
             adaptiveAdView?.destroy()
             adaptiveAdView = null
         } catch (ex: Exception) {
-            Log.e("AdsInformation", "bannerOnPause: ${ex.message}")
+            Log.e(TAG, "bannerOnPause: ${ex.message}")
         }
     }
 

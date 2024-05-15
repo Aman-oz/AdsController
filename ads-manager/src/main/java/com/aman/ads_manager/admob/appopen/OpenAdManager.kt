@@ -16,7 +16,7 @@ import java.util.Date
 
 private const val AD_UNIT_ID = "/6499/example/app-open"
 
-class OpenAdManager(private val application: Application) {
+class OpenAdManager(private val application: Application, private val AD_UNIT_ID: String) {
 
     private val TAG = OpenAdManager::class.java.simpleName
 

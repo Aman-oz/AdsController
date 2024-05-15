@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
  */
 class AdmobNative {
 
+    private val TAG = AdmobNative::class.java.simpleName
     /**
      * 0 = Ads Off
      * 1 = Ads On
@@ -59,7 +60,7 @@ class AdmobNative {
         bannerCallBack: BannerCallBack
     ) {
         val handlerException = CoroutineExceptionHandler { coroutineContext, throwable ->
-            Log.e("AdsInformation", "${throwable.message}")
+            Log.e(TAG, "${throwable.message}")
             bannerCallBack.onAdFailedToLoad("${throwable.message}")
         }
         activity?.let { mActivity ->
@@ -72,7 +73,7 @@ class AdmobNative {
                     if (preloadNativeAd != null) {
                         adMobNativeAd = preloadNativeAd
                         preloadNativeAd = null
-                        Log.d("AdsInformation", "admob native onAdLoaded")
+                        Log.d(TAG, "admob native onAdLoaded")
                         bannerCallBack.onPreloaded()
                         displayNativeAd(mActivity,adLayout, adFrame, nativeType)
                         return
@@ -88,13 +89,13 @@ class AdmobNative {
 
                                         override fun onAdImpression() {
                                             super.onAdImpression()
-                                            Log.d("AdsInformation", "admob native onAdImpression")
+                                            Log.d(TAG, "admob native onAdImpression")
                                             bannerCallBack.onAdImpression()
                                             adMobNativeAd = null
                                         }
 
                                         override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                                            Log.e("AdsInformation", "admob native onAdFailedToLoad: ${loadAdError.message}")
+                                            Log.e(TAG, "admob native onAdFailedToLoad: ${loadAdError.message}")
                                             bannerCallBack.onAdFailedToLoad(loadAdError.message)
                                             adFrame.gone()
                                             adShimmer.gone()
@@ -106,7 +107,7 @@ class AdmobNative {
                                             super.onAdLoaded()
 
                                             adShimmer.gone()
-                                            Log.d("AdsInformation", "admob native onAdLoaded")
+                                            Log.d(TAG, "admob native onAdLoaded")
                                             bannerCallBack.onAdLoaded()
                                             displayNativeAd(mActivity, adLayout, adFrame, nativeType)
 
@@ -125,7 +126,7 @@ class AdmobNative {
 
                         }
                     } else {
-                        Log.e("AdsInformation", "Native is already loaded")
+                        Log.e(TAG, "Native is already loaded")
                         bannerCallBack.onPreloaded()
                         displayNativeAd(mActivity, adLayout,adFrame, nativeType)
                     }
@@ -133,12 +134,12 @@ class AdmobNative {
                 } else {
                     adFrame.gone()
                     adShimmer.gone()
-                    Log.e("AdsInformation", "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                    Log.e(TAG, "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                     bannerCallBack.onAdFailedToLoad("isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 }
 
             } catch (ex: Exception) {
-                Log.e("AdsInformation", "${ex.message}")
+                Log.e(TAG, "${ex.message}")
                 bannerCallBack.onAdFailedToLoad("${ex.message}")
             }
         }
@@ -244,7 +245,7 @@ class AdmobNative {
                     adView.setNativeAd(ad)
                 }
             } catch (ex: Exception) {
-                Log.e("AdsInformation", "displayNativeAd: ${ex.message}")
+                Log.e(TAG, "displayNativeAd: ${ex.message}")
             }
         }
     }
