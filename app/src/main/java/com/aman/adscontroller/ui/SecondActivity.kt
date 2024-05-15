@@ -41,52 +41,5 @@ class SecondActivity : AppCompatActivity() {
             binding.customAdLayoutLarge.adFrame,
             NativeType.LARGE
         )
-
-        loadMyCustomNative()
-
-
-    }
-
-    private fun loadMyCustomNative() {
-        nativeAd.loadNativeAds(
-            this,
-            R.layout.native_ad_layout_with_media,
-            binding.customAdLayoutInclude.adFrame,
-            binding.customAdLayoutInclude.shimmer,
-            NATIVE_AD_ID,
-            false,
-            true,
-            NativeType.LARGE,
-            object : BannerCallBack {
-                override fun onAdClicked() {
-                    //ODO("Not yet implemented")
-                }
-
-                override fun onAdClosed() {
-                    //ODO("Not yet implemented")
-                }
-
-                override fun onAdFailedToLoad(adError: String) {
-                    //ODO("Not yet implemented")
-                }
-
-                override fun onAdImpression() {
-                    //ODO("Not yet implemented")
-                }
-
-                override fun onAdLoaded() {
-                    //ODO("Not yet implemented")
-                }
-
-                override fun onAdOpened() {
-                    //ODO("Not yet implemented")
-                }
-
-                override fun onPreloaded() {
-                    //ODO("Not yet implemented")
-                }
-
-            }
-        )
     }
 }

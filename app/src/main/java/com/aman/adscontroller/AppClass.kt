@@ -32,7 +32,7 @@ class AppClass: Application(), Application.ActivityLifecycleCallbacks, Lifecycle
         registerActivityLifecycleCallbacks(this)
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        appOpenAdManager = OpenAdManager(this)
+        appOpenAdManager = OpenAdManager(this, AD_UNIT_ID)
 
 
         MobileAds.initialize(this)

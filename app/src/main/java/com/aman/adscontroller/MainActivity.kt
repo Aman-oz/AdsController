@@ -83,9 +83,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnShowRewardedInterAd.setOnRapidClickSafeListener {
             showRewardedInterstitialAd()
+        }
 
-            //preLoadNativeForNextScreen()
-            //openNextActivity()
+        binding.btnPreLoadNativeAd.setOnClickListener {
+            preLoadNativeForNextScreen()
         }
 
         bannerAd.loadBannerAds(
@@ -268,10 +269,12 @@ class MainActivity : AppCompatActivity() {
             bannerCallBack = object : BannerCallBack {
                 override fun onAdFailedToLoad(adError: String) {
                     Log.d(TAG, "onAdFailedToLoad: ")
+                    openNextActivity()
                 }
 
                 override fun onAdLoaded() {
                     Log.d(TAG, "onAdLoaded: ")
+                    openNextActivity()
                 }
 
                 override fun onAdImpression() {
@@ -280,6 +283,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onPreloaded() {
                     Log.d(TAG, "onPreloaded: ")
+                    openNextActivity()
                 }
 
                 override fun onAdClicked() {
@@ -301,7 +305,6 @@ class MainActivity : AppCompatActivity() {
     private fun loadInterstitialAd() {
         interAd.loadInterstitialAd(
             "ca-app-pub-3940256099942544/1033173712",
-            1,
             false,
             connectivityManager.isInternetConnected,
             object : InterstitialOnLoadCallBack {
@@ -407,61 +410,64 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadRewardedInterstitialAd() {
+        if (!rewardedInterAd.isRewardedLoaded()) {
+            rewardedInterAd.loadRewardedInterstitialAd(
+                REWARDED_VIDEO,
+                false,
+                connectivityManager.isInternetConnected,
+                object : RewardedOnLoadCallBack {
+                    override fun onAdFailedToLoad(adError: String) {
+                        Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: $adError")
+                    }
 
-        rewardedInterAd.loadRewardedInterstitialAd(
-            REWARDED_VIDEO,
-            false,
-            connectivityManager.isInternetConnected,
-            object : RewardedOnLoadCallBack {
-                override fun onAdFailedToLoad(adError: String) {
-                    Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: $adError")
+                    override fun onAdLoaded() {
+                        Log.d(TAG, "loadRewardedInterstitialAd onAdLoaded: ")
+                    }
+
+                    override fun onPreloaded() {
+                        Log.d(TAG, "loadRewardedInterstitialAd onPreloaded: ")
+                    }
+
                 }
-
-                override fun onAdLoaded() {
-                    Log.d(TAG, "loadRewardedInterstitialAd onAdLoaded: ")
-                }
-
-                override fun onPreloaded() {
-                    Log.d(TAG, "loadRewardedInterstitialAd onPreloaded: ")
-                }
-
-            }
-        )
+            )
+        }
     }
 
     private fun showRewardedInterstitialAd() {
-        
-        rewardedInterAd.showRewardedInterstitialAd(
-            this,
-            false,
-            connectivityManager.isInternetConnected,
-            object : RewardedOnShowCallBack {
-                override fun onAdClicked() {
-                    Log.d(TAG, "showRewardedInterstitialAd onAdClicked: ")
-                }
 
-                override fun onAdDismissedFullScreenContent() {
-                    Log.d(TAG, "showRewardedInterstitialAd onAdDismissedFullScreenContent: ")
-                }
+        if (rewardedInterAd.isRewardedLoaded()) {
+            rewardedInterAd.showRewardedInterstitialAd(
+                this,
+                false,
+                connectivityManager.isInternetConnected,
+                object : RewardedOnShowCallBack {
+                    override fun onAdClicked() {
+                        Log.d(TAG, "showRewardedInterstitialAd onAdClicked: ")
+                    }
 
-                override fun onAdFailedToShowFullScreenContent() {
-                    Log.d(TAG, "showRewardedInterstitialAd onAdFailedToShowFullScreenContent: ")
-                }
+                    override fun onAdDismissedFullScreenContent() {
+                        Log.d(TAG, "showRewardedInterstitialAd onAdDismissedFullScreenContent: ")
+                    }
 
-                override fun onAdImpression() {
-                    Log.d(TAG, "showRewardedInterstitialAd onAdImpression: ")
-                }
+                    override fun onAdFailedToShowFullScreenContent() {
+                        Log.d(TAG, "showRewardedInterstitialAd onAdFailedToShowFullScreenContent: ")
+                    }
 
-                override fun onAdShowedFullScreenContent() {
-                    Log.d(TAG, "showRewardedInterstitialAd onAdShowedFullScreenContent: ")
-                }
+                    override fun onAdImpression() {
+                        Log.d(TAG, "showRewardedInterstitialAd onAdImpression: ")
+                    }
 
-                override fun onUserEarnedReward() {
-                    Log.d(TAG, "showRewardedInterstitialAd onUserEarnedReward: ")
-                }
+                    override fun onAdShowedFullScreenContent() {
+                        Log.d(TAG, "showRewardedInterstitialAd onAdShowedFullScreenContent: ")
+                    }
 
-            }
-        )
+                    override fun onUserEarnedReward() {
+                        Log.d(TAG, "showRewardedInterstitialAd onUserEarnedReward: ")
+                    }
+
+                }
+            )
+        }
     }
 
     private fun openNextActivity() {

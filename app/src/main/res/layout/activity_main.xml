@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
 
         <Button
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Open Next Activity"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="Open Next Activity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -22,8 +31,8 @@
             android:id="@+id/btnShowRewardedAd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Show Rewarded Ad"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="Show Rewarded Ad"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnNext" />
@@ -37,6 +46,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnShowRewardedAd" />
+
+        <Button
+            android:id="@+id/btnPreLoadNativeAd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="Pre Load Native Ad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnShowRewardedInterAd" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/adRootLayout"
@@ -73,37 +92,38 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include
-        android:id="@+id/customNativeBannerAdLayout"
-        layout="@layout/base_layout_native_banner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/_4sdp"
-        app:layout_constraintBottom_toTopOf="@+id/adRootLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <include
+            android:id="@+id/customNativeBannerAdLayout"
+            layout="@layout/base_layout_native_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/adRootLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-    <include
-        android:id="@+id/customNativeSmallAdLayout"
-        layout="@layout/base_layout_native_small_without_media"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/_4sdp"
-        app:layout_constraintBottom_toTopOf="@+id/customNativeBannerAdLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <include
+            android:id="@+id/customNativeSmallAdLayout"
+            layout="@layout/base_layout_native_small_without_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/customNativeBannerAdLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-    <include
-        android:id="@+id/customNativeLargeAdLayout"
-        layout="@layout/base_layout_native_with_media"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/_4sdp"
-        app:layout_constraintBottom_toTopOf="@+id/customNativeSmallAdLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <include
+            android:id="@+id/customNativeLargeAdLayout"
+            layout="@layout/base_layout_native_with_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_4sdp"
+            app:layout_constraintBottom_toTopOf="@+id/customNativeSmallAdLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+    </ScrollView>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
