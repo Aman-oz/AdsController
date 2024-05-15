@@ -23,6 +23,7 @@ import com.aman.ads_manager.callbacks.RewardedOnShowCallBack
 import com.aman.ads_manager.enums.BannerType
 import com.aman.ads_manager.enums.NativeType
 import com.aman.ads_manager.managers.InternetManager
+import com.aman.ads_manager.utils.CleanMemory
 import com.aman.adscontroller.databinding.ActivityMainBinding
 import com.aman.adscontroller.listeners.RapidSafeListener.setOnRapidClickSafeListener
 import com.aman.adscontroller.ui.SecondActivity
@@ -33,6 +34,7 @@ import com.aman.adscontroller.ui.SecondActivity
  * Software Engineer Android
  */
 
+const val NATIVE_AD_ID = "/6499/example/native"
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.java.simpleName
 
@@ -86,8 +88,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnShowRewardedInterAd.setOnRapidClickSafeListener {
             showRewardedInterstitialAd()
 
-            preLoadNativeForNextScreen()
-            openNextActivity()
+            //preLoadNativeForNextScreen()
+            //openNextActivity()
         }
 
         bannerAd.loadBannerAds(
@@ -409,7 +411,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadRewardedInterstitialAd() {
-        if (!rewardedInterAd.isRewardedLoaded()) {
+        /*if (!rewardedInterAd.isRewardedLoaded()) {
             rewardedInterAd.loadRewardedAd(
                 "ca-app-pub-3940256099942544/5224354917",
                 1,
@@ -430,11 +432,31 @@ class MainActivity : AppCompatActivity() {
 
                 }
             )
-        }
+        }*/
+
+        rewardedInterAd.loadRewardedInterstitialAd(
+            NATIVE_AD_ID,
+            false,
+            connectivityManager.isInternetConnected,
+            object : RewardedOnLoadCallBack {
+                override fun onAdFailedToLoad(adError: String) {
+                    Log.d(TAG, "loadRewardedInterstitialAd onAdFailedToLoad: ")
+                }
+
+                override fun onAdLoaded() {
+                    Log.d(TAG, "loadRewardedInterstitialAd onAdLoaded: ")
+                }
+
+                override fun onPreloaded() {
+                    Log.d(TAG, "loadRewardedInterstitialAd onPreloaded: ")
+                }
+
+            }
+        )
     }
 
     private fun showRewardedInterstitialAd() {
-        if (rewardedInterAd.isRewardedLoaded()) {
+        /*if (rewardedInterAd.isRewardedLoaded()) {
             rewardedInterAd.showRewardedAd(this, object : RewardedOnShowCallBack {
                 override fun onAdClicked() {
                     Log.d(TAG, "onAdClicked: ")
@@ -461,7 +483,39 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-        }
+        }*/
+        
+        rewardedInterAd.showRewardedInterstitialAd(
+            this,
+            false,
+            connectivityManager.isInternetConnected,
+            object : RewardedOnShowCallBack {
+                override fun onAdClicked() {
+                    Log.d(TAG, "showRewardedInterstitialAd onAdClicked: ")
+                }
+
+                override fun onAdDismissedFullScreenContent() {
+                    Log.d(TAG, "showRewardedInterstitialAd onAdDismissedFullScreenContent: ")
+                }
+
+                override fun onAdFailedToShowFullScreenContent() {
+                    Log.d(TAG, "showRewardedInterstitialAd onAdFailedToShowFullScreenContent: ")
+                }
+
+                override fun onAdImpression() {
+                    Log.d(TAG, "showRewardedInterstitialAd onAdImpression: ")
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    Log.d(TAG, "showRewardedInterstitialAd onAdShowedFullScreenContent: ")
+                }
+
+                override fun onUserEarnedReward() {
+                    Log.d(TAG, "showRewardedInterstitialAd onUserEarnedReward: ")
+                }
+
+            }
+        )
     }
 
     private fun openNextActivity() {
@@ -473,7 +527,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        //CleanMemory.clean()
+        CleanMemory.clean()
         super.onDestroy()
     }
 }

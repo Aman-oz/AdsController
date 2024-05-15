@@ -137,7 +137,7 @@ class AdmobRewardedInterstitial {
         }
     }
 
-    private fun isRewardedLoaded(): Boolean {
+    fun isRewardedLoaded(): Boolean {
         return rewardedInterAd != null
     }
 
@@ -163,7 +163,7 @@ class AdmobRewardedInterstitial {
                         AdRequest.Builder().build(),
                         object : RewardedInterstitialAdLoadCallback() {
                             override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                                Log.d(TAG, "onAdFailedToLoad: ${loadAdError.message}")
+                                Log.d(TAG, "AdmobRewardedInterstitial onAdFailedToLoad: ${loadAdError.message}")
                                 isRewardedInterLoading = false
                                 rewardedInterAd = null
 
@@ -173,17 +173,17 @@ class AdmobRewardedInterstitial {
                             override fun onAdLoaded(ad: RewardedInterstitialAd) {
                                 isRewardedInterLoading = false
                                 rewardedInterAd = ad
-                                Log.d(TAG, "onAdLoaded: ")
+                                Log.d(TAG, "AdmobRewardedInterstitial onAdLoaded: ")
 
                                 listener.onAdLoaded()
                             }
                         })
                 } else {
-                    Log.d(TAG, "onPreloaded: ")
+                    Log.d(TAG, "AdmobRewardedInterstitial onPreloaded: ")
                     listener.onPreloaded()
                 }
             } else {
-                Log.e(TAG, "isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
+                Log.e(TAG, "AdmobRewardedInterstitial, isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
                 listener.onAdFailedToLoad("isAppPurchased = $isAppPurchased, isInternetConnected = $isInternetConnected")
             }
         }
@@ -199,18 +199,18 @@ class AdmobRewardedInterstitial {
             return
 
         if (!isRewardedLoaded()) {
-            Log.d(TAG, "The rewarded ad wasn't ready yet.")
+            Log.d(TAG, "AdmobRewardedInterstitial The rewarded ad wasn't ready yet.")
             return
         }
 
         rewardedInterAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdClicked() {
-                Log.d(TAG, "admob Rewarded onAdClicked")
+                Log.d(TAG, "AdmobRewardedInterstitial admob Rewarded onAdClicked")
                 listener.onAdClicked()
             }
 
             override fun onAdDismissedFullScreenContent() {
-                Log.d(TAG, "admob Rewarded onAdDismissedFullScreenContent")
+                Log.d(TAG, "AdmobRewardedInterstitial admob Rewarded onAdDismissedFullScreenContent")
                 listener.onAdDismissedFullScreenContent()
                 rewardedInterAd = null
             }
@@ -218,7 +218,7 @@ class AdmobRewardedInterstitial {
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                 Log.e(
                     TAG,
-                    "admob Rewarded Interstitial onAdFailedToShowFullScreenContent: ${adError.message}"
+                    "AdmobRewardedInterstitial admob Rewarded Interstitial onAdFailedToShowFullScreenContent: ${adError.message}"
                 )
                 listener.onAdFailedToShowFullScreenContent()
                 rewardedInterAd = null
@@ -227,21 +227,21 @@ class AdmobRewardedInterstitial {
             override fun onAdShowedFullScreenContent() {
                 Log.d(
                     TAG,
-                    "admob Rewarded Interstitial onAdShowedFullScreenContent"
+                    "AdmobRewardedInterstitial admob Rewarded Interstitial onAdShowedFullScreenContent"
                 )
                 listener.onAdShowedFullScreenContent()
                 rewardedInterAd = null
             }
 
             override fun onAdImpression() {
-                Log.d(TAG, "admob Rewarded Interstitial onAdImpression")
+                Log.d(TAG, "AdmobRewardedInterstitial admob Rewarded Interstitial onAdImpression")
                 listener.onAdImpression()
             }
         }
 
         rewardedInterAd?.let { ad ->
             ad.show(activityContext) { rewardItem ->
-                Log.d("AdsInformation", "admob Rewarded Interstitial onUserEarnedReward")
+                Log.d(TAG, "AdmobRewardedInterstitial admob Rewarded Interstitial onUserEarnedReward")
                 listener.onUserEarnedReward()
             }
 
