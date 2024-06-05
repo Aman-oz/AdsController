@@ -10,6 +10,8 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.aman.ads_manager.admob.appopen.OpenAdManager
 import com.aman.ads_manager.callbacks.OnShowAdCompleteListener
+import com.facebook.ads.AdSettings
+import com.facebook.ads.AudienceNetworkAds
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 
@@ -28,6 +30,14 @@ class AppClass: Application(), Application.ActivityLifecycleCallbacks, Lifecycle
         super.onCreate()
         context = this
         appInstance = this
+
+        /*********Facebook ads***********/
+        AudienceNetworkAds.initialize(this)
+        // if app release change to false
+        AdSettings.setTestMode(true)
+        // Example for setting the SDK to crash when in debug mode
+        AdSettings.setIntegrationErrorMode(AdSettings.IntegrationErrorMode.INTEGRATION_ERROR_CRASH_DEBUG_MODE)
+        /************<end>*****************/
 
         registerActivityLifecycleCallbacks(this)
 
@@ -56,7 +66,8 @@ class AppClass: Application(), Application.ActivityLifecycleCallbacks, Lifecycle
     /** LifecycleObserver method that shows the app open ad when the app moves to foreground. */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
-        currentActivity?.let { showAdIfAvailable(it, object : OnShowAdCompleteListener {
+        currentActivity?.let {
+            showAdIfAvailable(it, object : OnShowAdCompleteListener {
             override fun onShowAdComplete() {
                 //cODO("Not yet implemented")
             }
@@ -84,7 +95,8 @@ class AppClass: Application(), Application.ActivityLifecycleCallbacks, Lifecycle
     override fun onActivityDestroyed(activity: Activity) {}
 
     fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
-        appOpenAdManager.showAdIfAvailable(activity, onShowAdCompleteListener)
+        if (!MainActivity.isAdShowing)
+            appOpenAdManager.showAdIfAvailable(activity, onShowAdCompleteListener)
     }
 
     fun loadAd(activity: Activity) {

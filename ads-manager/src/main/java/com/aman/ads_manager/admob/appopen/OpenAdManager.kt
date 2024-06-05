@@ -5,8 +5,12 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.aman.ads_manager.admob.interstitital.AdmobInterstitial
+import com.aman.ads_manager.admob.rewarded.AdmobRewarded
 import com.aman.ads_manager.callbacks.OnShowAdCompleteListener
 import com.aman.ads_manager.concent.GoogleMobileAdsConsentManager
+import com.aman.ads_manager.constants.AdsConstants
+import com.aman.ads_manager.utils.SharedPreferencesHelper
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -46,13 +50,11 @@ class OpenAdManager(private val application: Application, private val AD_UNIT_ID
                     isLoadingAd = false
                     loadTime = Date().time
                     Log.d(TAG, "onAdLoaded.")
-                    Toast.makeText(context, "onAdLoaded", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     isLoadingAd = false
                     Log.d(TAG, "onAdFailedToLoad: " + loadAdError.message)
-                    Toast.makeText(context, "onAdFailedToLoad", Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -71,6 +73,16 @@ class OpenAdManager(private val application: Application, private val AD_UNIT_ID
     fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
         if (isShowingAd) {
             Log.d(TAG, "The app open ad is already showing.")
+            return
+        }
+
+        if (AdsConstants.isInterstitialAdShowing) {
+            Log.d(TAG, "The interstitial ad is already showing.")
+            return
+        }
+        if (AdmobInterstitial.isInterstitialShowing || AdmobRewarded.isRewardedShowing) {
+            Log.d(TAG, "one ad is currently showing, skipping open ad.")
+            onShowAdCompleteListener.onShowAdComplete()
             return
         }
 
@@ -93,8 +105,6 @@ class OpenAdManager(private val application: Application, private val AD_UNIT_ID
                     appOpenAd = null
                     isShowingAd = false
                     Log.d(TAG, "onAdDismissedFullScreenContent.")
-                    Toast.makeText(activity, "onAdDismissedFullScreenContent", Toast.LENGTH_SHORT)
-                        .show()
 
                     onShowAdCompleteListener.onShowAdComplete()
                     if (googleMobileAdsConsentManager.canRequestAds) {
@@ -106,11 +116,6 @@ class OpenAdManager(private val application: Application, private val AD_UNIT_ID
                     appOpenAd = null
                     isShowingAd = false
                     Log.d(TAG, "onAdFailedToShowFullScreenContent: " + adError.message)
-                    Toast.makeText(
-                        activity,
-                        "onAdFailedToShowFullScreenContent",
-                        Toast.LENGTH_SHORT
-                    ).show()
 
                     onShowAdCompleteListener.onShowAdComplete()
                     if (googleMobileAdsConsentManager.canRequestAds) {
@@ -120,8 +125,6 @@ class OpenAdManager(private val application: Application, private val AD_UNIT_ID
 
                 override fun onAdShowedFullScreenContent() {
                     Log.d(TAG, "onAdShowedFullScreenContent.")
-                    Toast.makeText(activity, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
         isShowingAd = true

@@ -24,6 +24,7 @@ object AdsConstants {
     var isRewardedInterLoading = false
     var isInterLoading = false
     var isNativeLoading = false
+    var isInterstitialAdShowing = false
 
 
     fun reset(){
@@ -39,5 +40,6 @@ object AdsConstants {
         isRewardedInterLoading = false
         isInterLoading = false
         isNativeLoading = false
+        isInterstitialAdShowing = false
     }
 }

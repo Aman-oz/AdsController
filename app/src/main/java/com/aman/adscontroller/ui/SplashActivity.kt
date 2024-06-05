@@ -95,7 +95,6 @@ class SplashActivity : AppCompatActivity() {
                             object : OnShowAdCompleteListener {
                                 override fun onShowAdComplete() {
                                     // Check if the consent form is currently on screen before moving to the main
-                                    // activity.
                                     if (googleMobileAdsConsentManager.canRequestAds) {
                                         startMainActivity()
                                     }
@@ -123,5 +122,6 @@ class SplashActivity : AppCompatActivity() {
         fun startMainActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }

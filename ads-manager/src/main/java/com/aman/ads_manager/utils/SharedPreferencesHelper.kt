@@ -4,18 +4,19 @@ import android.content.Context
 
 object SharedPreferencesHelper {
 
-    private const val PREF_NAME = "AdsController"
-    private const val IS_APP_PURCHASED = "IS_APP_PURCHASED"
+    const val PREF_NAME = "AdsController"
+    const val IS_APP_PURCHASED = "IS_APP_PURCHASED"
+    const val IS_INTERSTITIAL_AD_SHOWING = "IS_INTERSTITIAL_AD_SHOWING"
 
-    fun setBoolean(context: Context, value: Boolean) {
+    fun setBoolean(context: Context, key: String, value: Boolean) {
         val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putBoolean(IS_APP_PURCHASED, value)
+        editor.putBoolean(key, value)
         editor.apply()
     }
 
-    fun getBoolean(context: Context, default: Boolean = false): Boolean {
+    fun getBoolean(context: Context, key: String, default: Boolean = false): Boolean {
         val sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        return sharedPreferences.getBoolean(IS_APP_PURCHASED, default)
+        return sharedPreferences.getBoolean(key, default)
     }
 }

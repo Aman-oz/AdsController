@@ -148,6 +148,8 @@ dependencies {
     implementation(libs.shimmer.view)
     implementation(libs.layout.size.sdp)
     implementation(libs.text.size.ssp)
+
+    implementation(libs.facebook.audience.network)
 }
 
 /*afterEvaluate {

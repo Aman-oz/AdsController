@@ -25,6 +25,9 @@ class AdmobRewarded {
     private val TAG = AdmobRewarded::class.java.simpleName
 
     private var context: Context? = null
+    companion object {
+        var isRewardedShowing = false
+    }
 
     fun initialize(context: Context) {
         this.context = context
@@ -88,12 +91,14 @@ class AdmobRewarded {
                     override fun onAdDismissedFullScreenContent() {
                         Log.d(TAG, "admob Rewarded onAdDismissedFullScreenContent")
                         listener.onAdDismissedFullScreenContent()
+                        isRewardedShowing = false
                         rewardedAd = null
                     }
 
                     override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                         Log.e(TAG, "admob Rewarded onAdFailedToShowFullScreenContent: ${adError.message}")
 
+                        isRewardedShowing = false
                         listener.onAdFailedToShowFullScreenContent()
                         rewardedAd = null
                     }
@@ -101,6 +106,7 @@ class AdmobRewarded {
                     override fun onAdShowedFullScreenContent() {
                         Log.d(TAG, "admob Rewarded onAdShowedFullScreenContent")
                         listener.onAdShowedFullScreenContent()
+                        isRewardedShowing = true
                         rewardedAd = null
                     }
 
@@ -110,6 +116,7 @@ class AdmobRewarded {
                     }
                 }
                 rewardedAd?.let { ad ->
+                    isRewardedShowing = true
                     ad.show(mActivity) { rewardItem ->
                         Log.d(TAG, "admob Rewarded onUserEarnedReward")
                         listener.onUserEarnedReward()

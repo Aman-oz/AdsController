@@ -24,6 +24,7 @@ import com.aman.ads_manager.managers.InternetManager
 import com.aman.ads_manager.utils.CleanMemory
 import com.aman.adscontroller.databinding.ActivityMainBinding
 import com.aman.adscontroller.listeners.RapidSafeListener.setOnRapidClickSafeListener
+import com.aman.adscontroller.ui.FacebookAdsActivity
 import com.aman.adscontroller.ui.SecondActivity
 
 /**
@@ -47,8 +48,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rewardedInterAd: AdmobRewardedInterstitial
 
     private val bannerAd by lazy { AdmobBanner() }
-
     private val connectivityManager by lazy { InternetManager(this) }
+
+    companion object {
+        var isAdShowing = false
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +91,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnPreLoadNativeAd.setOnClickListener {
             preLoadNativeForNextScreen()
+        }
+
+        binding.btnFacebookAds.setOnClickListener {
+            startActivity(Intent(this, FacebookAdsActivity::class.java))
         }
 
         bannerAd.loadBannerAds(
@@ -328,14 +336,17 @@ class MainActivity : AppCompatActivity() {
         interAd.showInterstitialAd(this, object : InterstitialOnShowCallBack {
             override fun onAdDismissedFullScreenContent() {
                 Log.d(TAG, "onAdDismissedFullScreenContent: ")
+                isAdShowing = false
                 interAd.loadAgainInterstitialAd("ca-app-pub-3940256099942544/1033173712")
             }
 
             override fun onAdFailedToShowFullScreenContent() {
+                isAdShowing = false
                 Log.d(TAG, "onAdFailedToShowFullScreenContent: ")
             }
 
             override fun onAdShowedFullScreenContent() {
+                isAdShowing = true
                 Log.d(TAG, "onAdShowedFullScreenContent: ")
             }
 
@@ -344,6 +355,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onAdNull() {
+                isAdShowing = false
                 interAd.loadAgainInterstitialAd("ca-app-pub-3940256099942544/1033173712")
             }
 
@@ -358,10 +370,12 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdDismissedFullScreenContent() {
+                    isAdShowing = false
                     Log.d(TAG, "onAdDismissedFullScreenContent: ")
                 }
 
                 override fun onAdFailedToShowFullScreenContent() {
+                    isAdShowing = false
                     Log.d(TAG, "onAdFailedToShowFullScreenContent: ")
                 }
 
@@ -370,6 +384,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdShowedFullScreenContent() {
+                    isAdShowing = true
                     Log.d(TAG, "onAdShowedFullScreenContent: ")
                 }
 
@@ -446,10 +461,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onAdDismissedFullScreenContent() {
+                        isAdShowing = false
                         Log.d(TAG, "showRewardedInterstitialAd onAdDismissedFullScreenContent: ")
                     }
 
                     override fun onAdFailedToShowFullScreenContent() {
+                        isAdShowing = false
                         Log.d(TAG, "showRewardedInterstitialAd onAdFailedToShowFullScreenContent: ")
                     }
 
@@ -458,6 +475,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     override fun onAdShowedFullScreenContent() {
+                        isAdShowing = true
                         Log.d(TAG, "showRewardedInterstitialAd onAdShowedFullScreenContent: ")
                     }
 
@@ -480,6 +498,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         CleanMemory.clean()
+        isAdShowing = false
         super.onDestroy()
     }
 }
