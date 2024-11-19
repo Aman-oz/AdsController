@@ -53,10 +53,25 @@ publishing {
         register<MavenPublication>("release") {
             afterEvaluate {
                 from(components["release"])
+                groupId = "com.github.Aman-oz"
+                artifactId = "AdsController"
+                version = "v2.0.8"
             }
         }
     }
 }
+
+/*publishing {
+    publications {
+        register("gprRelease", MavenPublication::class) {
+            from(components["release"])
+            groupId = "com.github.Aman-oz"
+            artifactId = "AdsController"
+            version = "v2.0.8"
+
+        }
+    }
+}*/
 
 
     /*publishing {
@@ -152,30 +167,5 @@ dependencies {
 
     implementation(libs.facebook.audience.network)
 }
-
-/*afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "com.aman"
-                artifactId = "ads-manager"
-                version = "1.0.0"
-            }
-        }
-    }
-}*/
-
-/*publishing {
-    publications {
-        register("gprRelease", MavenPublication::class) {
-            from(components["release"])
-            groupId = "com.aman"
-            artifactId = "ads-manager"
-            version = "1.0.0"
-
-        }
-    }
-}*/
 
 
