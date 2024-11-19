@@ -34,7 +34,7 @@ android {
     }
 }
 
-afterEvaluate {
+/*afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("release") {
@@ -42,6 +42,16 @@ afterEvaluate {
                 artifactId = "AdsController"
                 version = "2.0.2"
 
+                from(components["release"])
+            }
+        }
+    }
+}*/
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
                 from(components["release"])
             }
         }
