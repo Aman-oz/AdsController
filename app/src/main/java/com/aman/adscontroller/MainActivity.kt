@@ -422,6 +422,10 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "onUserEarnedReward: ")
                 }
 
+                override fun onPaidEvent(adValue: AdValue) {
+                    Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
+                }
+
             })
         }
     }
@@ -511,6 +515,10 @@ class MainActivity : AppCompatActivity() {
 
                     override fun onUserEarnedReward() {
                         Log.d(TAG, "showRewardedInterstitialAd onUserEarnedReward: ")
+                    }
+
+                    override fun onPaidEvent(adValue: AdValue) {
+                        Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
                     }
 
                 }

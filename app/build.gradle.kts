@@ -90,8 +90,8 @@ dependencies {
 //    implementation(libs.firebase.crashlytics)
     implementation(libs.bundles.firebase)
     implementation(libs.androidx.lifecycle.process)
-    //implementation(project(path = ":ads-manager"))
-    implementation (libs.admob.ads.controller)
+    implementation(project(path = ":ads-manager"))
+//    implementation (libs.admob.ads.controller)
 
     implementation(libs.facebook.audience.network)
     implementation(project(":ads-manager"))
