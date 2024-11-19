@@ -26,6 +26,7 @@ import com.aman.adscontroller.databinding.ActivityMainBinding
 import com.aman.adscontroller.listeners.RapidSafeListener.setOnRapidClickSafeListener
 import com.aman.adscontroller.ui.FacebookAdsActivity
 import com.aman.adscontroller.ui.SecondActivity
+import com.google.android.gms.ads.AdValue
 
 /**
  * @Author: Aman Ullah
@@ -62,13 +63,13 @@ class MainActivity : AppCompatActivity() {
 
         nativeAd = AdmobNative()
         nativeAdPreLoad = AdmobNativePreload()
-        rewardedAd = AdmobRewarded()
-        rewardedInterAd = AdmobRewardedInterstitial()
-        interAd = AdmobInterstitial()
+        rewardedAd = AdmobRewarded(this)
+        rewardedInterAd = AdmobRewardedInterstitial(this)
+        interAd = AdmobInterstitial(this)
 
-        interAd.initialize(this)
+        /*interAd.initialize(this)
         rewardedAd.initialize(this)
-        rewardedInterAd.initialize(this)
+        rewardedInterAd.initialize(this)*/
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -136,6 +137,11 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "onAdOpened: ")
                 }
 
+                override fun onPaidEvent(adValue: AdValue) {
+
+                    Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
+                }
+
             }
         )
 
@@ -175,6 +181,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onAdOpened() {
                     Log.d(TAG, "onAdOpened: ")
+                }
+
+                override fun onPaidEvent(adValue: AdValue) {
+                    Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
                 }
 
             }
@@ -218,6 +228,11 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "onAdOpened: ")
                 }
 
+                override fun onPaidEvent(adValue: AdValue) {
+
+                    Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
+                }
+
             }
         )
 
@@ -257,6 +272,11 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onAdOpened() {
                     Log.d(TAG, "onAdOpened: ")
+                }
+
+                override fun onPaidEvent(adValue: AdValue) {
+
+                    Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
                 }
 
             }
@@ -304,6 +324,11 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onAdOpened() {
                     Log.d(TAG, "onAdOpened: ")
+                }
+
+                override fun onPaidEvent(adValue: AdValue) {
+
+                    Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
                 }
 
             }
@@ -357,6 +382,11 @@ class MainActivity : AppCompatActivity() {
             override fun onAdNull() {
                 isAdShowing = false
                 interAd.loadAgainInterstitialAd("ca-app-pub-3940256099942544/1033173712")
+            }
+
+            override fun onPaidEvent(adValue: AdValue) {
+
+                Log.d(TAG, "onPaidEvent: adValue: ${adValue.valueMicros}")
             }
 
         })

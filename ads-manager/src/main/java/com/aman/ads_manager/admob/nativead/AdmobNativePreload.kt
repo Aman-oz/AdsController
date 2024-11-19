@@ -66,6 +66,11 @@ class AdmobNativePreload {
                             val adLoader =
                                 builder.forNativeAd { unifiedNativeAd: NativeAd? ->
                                     preloadNativeAd = unifiedNativeAd
+
+                                    unifiedNativeAd?.setOnPaidEventListener { adValue ->
+                                        bannerCallBack.onPaidEvent(adValue)
+                                    }
+
                                 }
                                     .withAdListener(object : AdListener() {
                                         override fun onAdImpression() {

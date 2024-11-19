@@ -20,17 +20,12 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
  * @Date: 07,May,2024.
  * Software Engineer Android
  */
-class AdmobRewarded {
+class AdmobRewarded(private val context: Context) {
 
     private val TAG = AdmobRewarded::class.java.simpleName
 
-    private var context: Context? = null
     companion object {
         var isRewardedShowing = false
-    }
-
-    fun initialize(context: Context) {
-        this.context = context
     }
     /**
      * 0 = Ads Off
@@ -123,7 +118,7 @@ class AdmobRewarded {
                     }
 
                     ad.onPaidEventListener = OnPaidEventListener { adValue ->
-                        //revenue logic here
+                        listener.onPaidEvent(adValue)
                     }
                 }
             }

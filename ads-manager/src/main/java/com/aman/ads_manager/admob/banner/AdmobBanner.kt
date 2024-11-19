@@ -144,8 +144,9 @@ class AdmobBanner {
                     }
 
                     adaptiveAdView?.onPaidEventListener = OnPaidEventListener { adValue ->
-                        //implement ad Revenue logic
+                        bannerCallBack.onPaidEvent(adValue)
                     }
+
                 } else {
                     adFrame.removeAllViews()
                     adFrame.gone()

@@ -10,7 +10,6 @@
         android:id="@+id/adStrokeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_3sdp"
         android:background="@drawable/ad_stroke_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout

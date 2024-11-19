@@ -1,5 +1,7 @@
 package com.aman.ads_manager.callbacks
 
+import com.google.android.gms.ads.AdValue
+
 /**
  * @Author: Aman Ullah
  * @Date: 06,May,2024.
@@ -13,4 +15,5 @@ interface BannerCallBack {
     fun onAdClicked()
     fun onAdClosed()
     fun onAdOpened()
+    fun onPaidEvent(adValue: AdValue)
 }

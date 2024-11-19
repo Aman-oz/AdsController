@@ -23,19 +23,19 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
  * @Date: 07,May,2024.
  * Software Engineer Android
  */
-class AdmobInterstitial {
+class AdmobInterstitial(private val context: Context) {
 
     private val TAG = AdmobInterstitial::class.java.simpleName
 
-    private var context: Context? = null
+    //private var context: Context? = null
 
     companion object {
         var isInterstitialShowing = false
     }
 
-    fun initialize(context: Context) {
+    /*fun initialize(context: Context) {
         this.context = context
-    }
+    }*/
 
     /**
      * 0 = Ads Off
@@ -121,6 +121,11 @@ class AdmobInterstitial {
                 }
                 isInterstitialShowing = true
                 mInterstitialAd?.show(mActivity)
+
+                mInterstitialAd?.setOnPaidEventListener { adValue ->
+                    listener.onPaidEvent(adValue)
+                }
+
             }else {
                 listener.onAdNull()
             }
@@ -166,6 +171,10 @@ class AdmobInterstitial {
                 }
                 isInterstitialShowing = true
                 mInterstitialAd?.show(mActivity)
+
+                mInterstitialAd?.setOnPaidEventListener { adValue ->
+                    listener.onPaidEvent(adValue)
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.aman.adscontroller.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -16,6 +17,9 @@ import com.aman.adscontroller.MainActivity
 import com.aman.adscontroller.R
 import com.aman.adscontroller.databinding.ActivitySplashBinding
 import com.google.android.gms.ads.MobileAds
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -41,87 +45,104 @@ class SplashActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-            Log.d(TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion())
+        Log.d(TAG, "Google Mobile Ads SDK Version: " + MobileAds.getVersion())
 
-            // Create a timer so the SplashActivity will be displayed for a fixed amount of time.
-            createTimer(COUNTER_TIME_MILLISECONDS)
+        // Create a timer so the SplashActivity will be displayed for a fixed amount of time.
+        createTimer(COUNTER_TIME_MILLISECONDS)
 
-            googleMobileAdsConsentManager =
-                GoogleMobileAdsConsentManager.getInstance(applicationContext)
-            googleMobileAdsConsentManager.gatherConsent(this) { consentError ->
-                if (consentError != null) {
-                    // Consent not obtained in current session.
-                    Log.w(
-                        TAG,
-                        String.format("%s: %s", consentError.errorCode, consentError.message)
-                    )
-                }
-
-                if (googleMobileAdsConsentManager.canRequestAds) {
-                    initializeMobileAdsSdk()
-                }
-
-                if (secondsRemaining <= 0) {
-                    startMainActivity()
-                }
+        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
+        googleMobileAdsConsentManager.gatherConsent(this) { consentError ->
+            if (consentError != null) {
+                // Consent not obtained in current session.
+                Log.w(
+                    TAG,
+                    String.format("%s: %s", consentError.errorCode, consentError.message)
+                )
             }
 
-            // This sample attempts to load ads using consent obtained in the previous session.
             if (googleMobileAdsConsentManager.canRequestAds) {
                 initializeMobileAdsSdk()
+
+            }
+
+            setHasUserConsent(googleMobileAdsConsentManager.canRequestAds, applicationContext)
+
+            if (secondsRemaining <= 0) {
+                startMainActivity()
             }
         }
 
-        /**
-         * Create the countdown timer, which counts down to zero and show the app open ad.
-         *
-         * @param time the number of milliseconds that the timer counts down from
-         */
-        private fun createTimer(time: Long) {
-            val counterTextView: TextView = findViewById(R.id.txtSplashLoading)
-            val countDownTimer: CountDownTimer =
-                object : CountDownTimer(time, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
-                        counterTextView.text = "App is done loading in: $secondsRemaining"
-                    }
-
-                    override fun onFinish() {
-                        secondsRemaining = 0
-                        counterTextView.text = "Done."
-
-                        (application as AppClass).showAdIfAvailable(
-                            this@SplashActivity,
-                            object : OnShowAdCompleteListener {
-                                override fun onShowAdComplete() {
-                                    // Check if the consent form is currently on screen before moving to the main
-                                    if (googleMobileAdsConsentManager.canRequestAds) {
-                                        startMainActivity()
-                                    }
-                                }
-                            }
-                        )
-                    }
-                }
-            countDownTimer.start()
-        }
-
-        private fun initializeMobileAdsSdk() {
-            if (isMobileAdsInitializeCalled.getAndSet(true)) {
-                return
-            }
-
-            // Initialize the Mobile Ads SDK.
-            MobileAds.initialize(this) {}
-
-            // Load an ad.
-            (application as AppClass).loadAd(this)
-        }
-
-        /** Start the MainActivity. */
-        fun startMainActivity() {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        // This sample attempts to load ads using consent obtained in the previous session.
+        if (googleMobileAdsConsentManager.canRequestAds) {
+            initializeMobileAdsSdk()
         }
     }
+
+    /**
+     * Create the countdown timer, which counts down to zero and show the app open ad.
+     *
+     * @param time the number of milliseconds that the timer counts down from
+     */
+    private fun createTimer(time: Long) {
+        val counterTextView: TextView = findViewById(R.id.txtSplashLoading)
+        val countDownTimer: CountDownTimer =
+            object : CountDownTimer(time, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
+                    counterTextView.text = "App is done loading in: $secondsRemaining"
+                }
+
+                override fun onFinish() {
+                    secondsRemaining = 0
+                    counterTextView.text = "Done."
+
+                    (application as AppClass).showAdIfAvailable(
+                        this@SplashActivity,
+                        object : OnShowAdCompleteListener {
+                            override fun onShowAdComplete() {
+                                // Check if the consent form is currently on screen before moving to the main
+                                if (googleMobileAdsConsentManager.canRequestAds) {
+                                    startMainActivity()
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        countDownTimer.start()
+    }
+
+    private fun initializeMobileAdsSdk() {
+        if (isMobileAdsInitializeCalled.getAndSet(true)) {
+            return
+        }
+
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this) {}
+
+        // Load an ad.
+        (application as AppClass).loadAd(this)
+    }
+
+    /** Start the MainActivity. */
+    fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun setHasUserConsent(hasUserConsent: Boolean, context: Context) {
+        CoroutineScope(Dispatchers.IO).launch {
+            // Set whether or not the user has provided consent for information sharing with AppLovin.
+            /*AppLovinPrivacySettings.setHasUserConsent(hasUserConsent, context)
+            // Liftoff SDK
+            VunglePrivacySettings.setGDPRStatus(hasUserConsent, "v1.0.0")
+            // Mintegral SDK
+            val sdk = MBridgeSDKFactory.getMBridgeSDK()
+            sdk.setConsentStatus(
+                context,
+                if (hasUserConsent) MBridgeConstans.IS_SWITCH_ON else MBridgeConstans.IS_SWITCH_OFF
+            )*/
+        }
+    }
+}

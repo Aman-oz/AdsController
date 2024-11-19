@@ -22,15 +22,15 @@ import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoa
  * @Date: 07,May,2024.
  * Software Engineer Android
  */
-class AdmobRewardedInterstitial {
+class AdmobRewardedInterstitial(private val context: Context) {
 
     private val TAG = AdmobRewardedInterstitial::class.java.simpleName
 
-    private var context: Context? = null
+//    private var context: Context? = null
 
-    fun initialize(context: Context) {
+    /*fun initialize(context: Context) {
         this.context = context
-    }
+    }*/
 
     /**
      * 0 = Ads Off

@@ -81,11 +81,16 @@ class AdmobNative {
                     if (adMobNativeAd == null) {
                         CoroutineScope(Dispatchers.IO + handlerException).launch {
                             val builder: AdLoader.Builder = AdLoader.Builder(mActivity, nativeId)
-                            val adLoader =
-                                builder.forNativeAd { unifiedNativeAd: NativeAd? ->
+                            val adLoader = builder.forNativeAd { unifiedNativeAd: NativeAd? ->
+
                                     adMobNativeAd = unifiedNativeAd
+                                unifiedNativeAd?.setOnPaidEventListener { adValue ->
+                                    bannerCallBack.onPaidEvent(adValue)
+
+
                                 }
-                                    .withAdListener(object : AdListener() {
+
+                                }.withAdListener(object : AdListener() {
 
                                         override fun onAdImpression() {
                                             super.onAdImpression()
