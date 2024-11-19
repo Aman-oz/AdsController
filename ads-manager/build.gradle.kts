@@ -40,13 +40,23 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
                 artifactId = "AdsController"
-                version = "2.0.2"
+                version = "2.0.5"
 
                 from(components["release"])
             }
         }
     }
 }
+
+/*publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}*/
 
 /*publishing {
     publications {
