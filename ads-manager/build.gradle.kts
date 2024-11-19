@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("maven-publish")
+//    alias(libs.plugins.mavenPublish)
 }
 
 android {
@@ -25,11 +26,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -39,7 +40,7 @@ afterEvaluate {
             create<MavenPublication>("release") {
                 groupId = "com.github.Aman-oz"
                 artifactId = "AdsController"
-                version = "2.0.1"
+                version = "2.0.2"
 
                 from(components["release"])
             }
